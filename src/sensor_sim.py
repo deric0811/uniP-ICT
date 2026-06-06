@@ -13,7 +13,6 @@ import threading
 # ==========================================
 # ⚙️ 설정 (Configuration)
 # ==========================================
-# 나중에 RP5의 실제 IP 주소로 변경하세요.
 MQTT_HOST = "uniP-ICT.h2omol.com" 
 MQTT_PORT = 8883
 MQTT_TOPIC = "campus/room_101/sensors/air"

@@ -2,7 +2,7 @@
 **Edge-level Fault-Tolerant IoT System (MVP)**
 
 ## 📺 Demonstration Video
-> **[Watch the Live Demo Here](YOUR_YOUTUBE_LINK_HERE)**
+> **[Watch the Live Demo Here](https://youtu.be/KJNrzLP0Aks)**
 LINK LINK LINK
 
 ## 💡 System Overview
@@ -63,4 +63,5 @@ LINK LINK LINK
 ## Issue 3. Cold Start Spike 방어 (초기화 이상치)
 * **Problem:** 시스템을 재시작했을 때 간헐적으로 Recovered 선이 4000ppm이라는 비정상적인 위치에서 평행선을 그리는 치명적인 버그가 발견되었습니다.
 * **Root Cause Analysis:** 프론트엔드가 Polling을 통해 최근 30개의 데이터를 가져갈 때, 하필 그 30개 중 '첫 번째' 데이터가 과거에 발생했던 거대한 스파이크(이상치) 값이었던 상황입니다. 시스템은 무조건 첫 번째 값을 기준점으로 삼도록 하드코딩되어 있었기 때문에, 4000이라는 스파이크를 정상 궤도로 맹신하고 이후에 들어오는 600대의 정상 수치들을 모조리 노이즈로 판별해 잘라냈습니다.
-* **Solution: Stable Baseline 궤도 탐색.** 초기 기준점을 잡을 때 단순히 첫 번째 데이터를 맹신하지 않도록 로직을 수정했습니다. 30개의 윈도우 내에서 `abs(val[i] - val[i+1]) <= threshold` 공식을 통해 **'연속된 두 값의 편차가 임계치 이내인 안정적인 궤도'**를 먼저 탐색한 뒤, 이를 진정한 기준점으로 삼는 Cold Start 방어 로직을 추가하여 무결성을 확보했습니다.
+* **Solution: Stable Baseline 궤도 탐색.** 초기 기준점을 잡을 때 단순히 첫 번째 데이터를 맹신하지 않도록 로직을 수정했습니다. 30개의 윈도우 내에서 `abs(val[i] - val[i+1]) <= threshold` 공식을 통해 **'연속된 두 값의 편차가 임계치 이내인 안정적인 궤도'**를 먼저 탐색한 뒤, 이를 진정한 기준점으로 삼는 Cold Start 방어 로직을 추가하여 무결성을 확보했습니다. 
+```
